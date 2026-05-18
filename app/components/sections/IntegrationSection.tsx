@@ -5,8 +5,6 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 import Image from "next/image";
 import { cn } from "@/app/lib/utils";
 
-gsap.registerPlugin(ScrollTrigger);
-
 interface SectionProps {
   scrollToFooter: () => void;
 }
@@ -20,6 +18,7 @@ const IntegrationSection: React.FC<SectionProps> = ({ scrollToFooter }) => {
   const logo2Ref = useRef<HTMLImageElement>(null);
 
   useEffect(() => {
+    gsap.registerPlugin(ScrollTrigger);
     const ctx = gsap.context(() => {
       const tl = gsap.timeline({
         scrollTrigger: {

@@ -5,8 +5,6 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 import Image from "next/image";
 import { cn } from "@/app/lib/utils";
 
-gsap.registerPlugin(ScrollTrigger);
-
 interface SectionProps {
   scrollToFooter: () => void;
 }
@@ -22,7 +20,6 @@ const STEP_SIZE = 1 / (STEPS.length + 1);
 
 const ConnectedDevices: React.FC<SectionProps> = ({ scrollToFooter }) => {
   const sectionRef = useRef<HTMLDivElement>(null);
-  // The blue "lit" layer for each word
   const litRefs = useRef<(HTMLSpanElement | null)[]>([]);
   const imageRefs = useRef<(HTMLDivElement | null)[]>([]);
   const paragraphRef = useRef<HTMLParagraphElement>(null);
@@ -30,6 +27,7 @@ const ConnectedDevices: React.FC<SectionProps> = ({ scrollToFooter }) => {
   const [activeIndex, setActiveIndex] = useState(-1);
 
   useEffect(() => {
+    gsap.registerPlugin(ScrollTrigger);
     const ctx = gsap.context(() => {
       // ── Initial states ──
       // Lit layers start fully transparent

@@ -1,10 +1,9 @@
 "use client";
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { motion } from "framer-motion";
 import { gsap } from "gsap";
 import Image from "next/image";
 import { cn } from "@/app/lib/utils";
-// import { cn } from "@/lib/utils";
 
 interface HeroProps {
   scrollToFooter: () => void;
@@ -14,6 +13,11 @@ const Hero: React.FC<HeroProps> = ({ scrollToFooter }) => {
   const phone1Ref = useRef<HTMLImageElement>(null);
   const phone2Ref = useRef<HTMLImageElement>(null);
   const hasAnimated = useRef(false);
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -65,13 +69,11 @@ const Hero: React.FC<HeroProps> = ({ scrollToFooter }) => {
       <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-[var(--background)] pointer-events-none" />
 
       {/* Navbar Logo */}
-      <motion.div
+      <div
         onClick={handleScrollToTop}
-        initial={{ y: -60, opacity: 0 }}
-        animate={{ y: 0, opacity: 1 }}
-        transition={{ duration: 1.2, ease: "easeOut" }}
         style={{ borderTop: 0 }}
-        className="fixed top-0 left-1/2 -translate-x-1/2 z-50 px-4 py-2 bg-transparent backdrop-blur-lg border border-white/5 rounded-b-lg cursor-pointer"
+        className="fixed top-0 left-1/2 -translate-x-1/2 z-50 px-4 py-2 bg-transparent backdrop-blur-lg border border-white/5 rounded-b-lg cursor-pointer transition-opacity duration-700"
+        suppressHydrationWarning
       >
         <Image
           src="/logo.svg"
@@ -81,31 +83,44 @@ const Hero: React.FC<HeroProps> = ({ scrollToFooter }) => {
           priority
           quality={90}
         />
-      </motion.div>
+      </div>
 
       {/* Main Content */}
       <div className="relative z-10 flex flex-col items-center mt-[120px] sm:mb-[40px] px-4">
-        <motion.h1
-          initial={{ y: 40, opacity: 0 }}
-          animate={{ y: 0, opacity: 1 }}
-          transition={{ duration: 1, ease: "easeOut", delay: 0.3 }}
-          className="text-white text-center font-poppins text-3xl sm:text-[48px] md:text-[64px] font-[275] leading-tight md:leading-[96px] tracking-[-0.704px]"
-        >
-          Experience the Future of <br />
-          <span className="text-gradient font-light">Workspaces</span>
-        </motion.h1>
+        {mounted ? (
+          <motion.h1
+            initial={{ y: 40, opacity: 0 }}
+            animate={{ y: 0, opacity: 1 }}
+            transition={{ duration: 1, ease: "easeOut", delay: 0.3 }}
+            className="text-white text-center font-poppins text-3xl sm:text-[48px] md:text-[64px] font-[275] leading-tight md:leading-[96px] tracking-[-0.704px]"
+          >
+            Experience the Future of <br />
+            <span className="text-gradient font-light">Workspaces</span>
+          </motion.h1>
+        ) : (
+          <h1 className="text-white text-center font-poppins text-3xl sm:text-[48px] md:text-[64px] font-[275] leading-tight md:leading-[96px] tracking-[-0.704px] opacity-0">
+            Experience the Future of <br />
+            <span className="text-gradient font-light">Workspaces</span>
+          </h1>
+        )}
 
-        <motion.button
-          onClick={scrollToFooter}
-          initial={{ y: 40, opacity: 0 }}
-          animate={{ y: 0, opacity: 1 }}
-          transition={{ duration: 1, ease: "easeOut", delay: 0.5 }}
-          whileHover={{ scale: 1.04 }}
-          whileTap={{ scale: 0.97 }}
-          className={cn("btn-primary mt-6")}
-        >
-          Request a demo
-        </motion.button>
+        {mounted ? (
+          <motion.button
+            onClick={scrollToFooter}
+            initial={{ y: 40, opacity: 0 }}
+            animate={{ y: 0, opacity: 1 }}
+            transition={{ duration: 1, ease: "easeOut", delay: 0.5 }}
+            whileHover={{ scale: 1.04 }}
+            whileTap={{ scale: 0.97 }}
+            className={cn("btn-primary mt-6")}
+          >
+            Request a demo
+          </motion.button>
+        ) : (
+          <button onClick={scrollToFooter} className={cn("btn-primary mt-6 opacity-0")}>
+            Request a demo
+          </button>
+        )}
       </div>
 
       {/* Mockup Section */}
@@ -126,12 +141,7 @@ const Hero: React.FC<HeroProps> = ({ scrollToFooter }) => {
           }}
         />
 
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 1.2, ease: "easeOut", delay: 0.6 }}
-          className="order-3 md:order-2 w-[95%] sm:w-[90%] md:w-full md:max-w-2xl"
-        >
+        <div className="order-3 md:order-2 w-[95%] sm:w-[90%] md:w-full md:max-w-2xl">
           <Image
             src="/dashboard.png"
             alt="Dashboard Mockup"
@@ -141,7 +151,7 @@ const Hero: React.FC<HeroProps> = ({ scrollToFooter }) => {
             priority
             quality={85}
           />
-        </motion.div>
+        </div>
 
         <Image
           ref={phone2Ref}
