@@ -218,10 +218,10 @@ const Footer: React.FC = () => {
         <div className="flex items-center space-x-2">
           <Mail className="w-5 h-5 text-[var(--accent)]" />
           <a
-            href="mailto:samer.abualia@bridge-xglobal.com"
+            href="mailto:S.Abualia@bridge-xglobal.com"
             className="hover:text-[var(--accent)] transition"
           >
-            samer.abualia@bridge-xglobal.com
+            S.Abualia@bridge-xglobal.com
           </a>
         </div>
       </div>
