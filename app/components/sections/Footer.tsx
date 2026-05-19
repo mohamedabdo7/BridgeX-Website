@@ -27,7 +27,7 @@ const Footer: React.FC = () => {
     };
 
     try {
-      const response = await fetch("/api/contact", {
+      const response = await fetch("/api/cta", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(data),
@@ -41,8 +41,7 @@ const Footer: React.FC = () => {
         setSubmitStatus("error");
         setTimeout(() => setSubmitStatus("idle"), 5000);
       }
-    } catch (error) {
-      console.error("Fetch error:", error);
+    } catch {
       setSubmitStatus("error");
       setTimeout(() => setSubmitStatus("idle"), 5000);
     } finally {
@@ -72,12 +71,12 @@ const Footer: React.FC = () => {
       <div className="relative max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-8 mt-12">
         {/* Left */}
         <div className="flex flex-col items-center sm:items-start text-center sm:text-left space-y-6 md:space-y-8">
-          <h1 className="text-center sm:text-left font-poppins font-medium text-[40px] sm:text-[64px] leading-[60px] sm:leading-[96px] tracking-[0.76px] sm:tracking-[1.216px] text-gradient-vertical">
+          <h2 className="text-center sm:text-left font-poppins font-medium text-[40px] sm:text-[64px] leading-[60px] sm:leading-[96px] tracking-[0.76px] sm:tracking-[1.216px] text-gradient-vertical">
             <div className="flex flex-row lg:flex-col justify-center sm:justify-start">
               <span className="whitespace-nowrap">Let&apos;s</span>
               <span className="ml-2 lg:ml-0 whitespace-nowrap">Explore</span>
             </div>
-          </h1>
+          </h2>
 
           <Image
             src="/logo.svg"
@@ -89,9 +88,9 @@ const Footer: React.FC = () => {
             quality={90}
           />
 
-          <h1 className="text-center sm:text-left font-poppins font-medium text-[40px] sm:text-[64px] leading-[60px] sm:leading-[96px] tracking-[0.76px] sm:tracking-[1.216px] text-gradient-vertical">
+          <h2 className="text-center sm:text-left font-poppins font-medium text-[40px] sm:text-[64px] leading-[60px] sm:leading-[96px] tracking-[0.76px] sm:tracking-[1.216px] text-gradient-vertical">
             <span>Together</span>
-          </h1>
+          </h2>
         </div>
 
         {/* Right */}

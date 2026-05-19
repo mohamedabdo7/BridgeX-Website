@@ -5,6 +5,8 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 import Image from "next/image";
 import { cn } from "@/app/lib/utils";
 
+gsap.registerPlugin(ScrollTrigger);
+
 interface SectionProps {
   scrollToFooter: () => void;
 }
@@ -19,67 +21,60 @@ const IntegrationCustomization: React.FC<SectionProps> = ({
   const bgBottomRightRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    gsap.registerPlugin(ScrollTrigger);
-    const section = sectionRef.current;
+    const ctx = gsap.context(() => {
+      const timeline = gsap.timeline({
+        scrollTrigger: {
+          trigger: sectionRef.current,
+          start: "top top",
+          end: "bottom top",
+          scrub: 1,
+          pin: true,
+          anticipatePin: 1,
+          invalidateOnRefresh: true,
+        },
+      });
 
-    const timeline = gsap.timeline({
-      scrollTrigger: {
-        trigger: section,
-        start: "top top",
-        end: "bottom top",
-        scrub: 1,
-        pin: true,
-        anticipatePin: 1,
-        invalidateOnRefresh: true,
-      },
-    });
-
-    timeline.to(dashboardRef.current, {
-      x: "0%",
-      y: "0%",
-      duration: 1.5,
-      ease: "power2.out",
-    });
-
-    timeline.to(
-      bgTopLeftRef.current,
-      {
-        rotate: 40,
-        x: "350px",
-        y: "300px",
-        scale: 1,
+      timeline.to(dashboardRef.current, {
+        x: "0%",
+        y: "0%",
         duration: 1.5,
         ease: "power2.out",
-      },
-      "<",
-    );
+      });
 
-    timeline.to(
-      contentRef.current,
-      { y: "0", opacity: 1, duration: 1.5, ease: "power2.out" },
-      "<",
-    );
+      timeline.to(
+        bgTopLeftRef.current,
+        {
+          rotate: 40,
+          x: "350px",
+          y: "300px",
+          scale: 1,
+          duration: 1.5,
+          ease: "power2.out",
+        },
+        "<",
+      );
 
-    timeline.to(
-      bgBottomRightRef.current,
-      {
-        x: "200px",
-        y: "200px",
-        rotate: 150,
-        scale: 0.5,
-        duration: 1.5,
-        ease: "power2.out",
-      },
-      "<",
-    );
+      timeline.to(
+        contentRef.current,
+        { y: "0", opacity: 1, duration: 1.5, ease: "power2.out" },
+        "<",
+      );
 
-    return () => {
-      if (section) {
-        ScrollTrigger.getAll().forEach((t) => {
-          if (t.trigger === section) t.kill();
-        });
-      }
-    };
+      timeline.to(
+        bgBottomRightRef.current,
+        {
+          x: "200px",
+          y: "200px",
+          rotate: 150,
+          scale: 0.5,
+          duration: 1.5,
+          ease: "power2.out",
+        },
+        "<",
+      );
+    }, sectionRef);
+
+    return () => ctx.revert();
   }, []);
 
   return (
@@ -92,7 +87,7 @@ const IntegrationCustomization: React.FC<SectionProps> = ({
         ref={bgTopLeftRef}
         className="absolute rotate-[10deg] top-[-200px] left-[-400px] w-[883px] h-[524px] z-[-1]"
         style={{
-          backgroundImage: "url('./topleft-bg.png')",
+          backgroundImage: "url('/topleft-bg.png')",
           backgroundSize: "contain",
           backgroundRepeat: "no-repeat",
           transform: "scale(0.5)",
@@ -105,7 +100,7 @@ const IntegrationCustomization: React.FC<SectionProps> = ({
         ref={bgBottomRightRef}
         className="absolute rotate-[20deg] bottom-[100px] right-[50px] w-[470px] h-[360px] bg-cover"
         style={{
-          backgroundImage: "url('./bottomright-bg.png')",
+          backgroundImage: "url('/bottomright-bg.png')",
           willChange: "transform",
         }}
       />
