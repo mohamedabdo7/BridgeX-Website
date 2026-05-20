@@ -5,6 +5,8 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 import Image from "next/image";
 import { cn } from "@/app/lib/utils";
 
+gsap.registerPlugin(ScrollTrigger);
+
 interface SectionProps {
   scrollToFooter: () => void;
 }
@@ -27,7 +29,6 @@ const ConnectedDevices: React.FC<SectionProps> = ({ scrollToFooter }) => {
   const [activeIndex, setActiveIndex] = useState(-1);
 
   useEffect(() => {
-    gsap.registerPlugin(ScrollTrigger);
     const ctx = gsap.context(() => {
       // ── Initial states ──
       // Lit layers start fully transparent

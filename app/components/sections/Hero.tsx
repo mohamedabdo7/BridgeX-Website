@@ -64,13 +64,14 @@ const Hero: React.FC<HeroProps> = ({ scrollToFooter }) => {
       {/* Background */}
       <div
         className="absolute inset-0 bg-cover bg-center bg-no-repeat"
-        style={{ backgroundImage: "url('./background.png')" }}
+        style={{ backgroundImage: "url('/background.png')" }}
       />
       <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-[var(--background)] pointer-events-none" />
 
       {/* Navbar Logo */}
-      <div
+      <button
         onClick={handleScrollToTop}
+        aria-label="Scroll to top"
         style={{ borderTop: 0 }}
         className="fixed top-0 left-1/2 -translate-x-1/2 z-50 px-4 py-2 bg-transparent backdrop-blur-lg border border-white/5 rounded-b-lg cursor-pointer transition-opacity duration-700"
         suppressHydrationWarning
@@ -83,7 +84,7 @@ const Hero: React.FC<HeroProps> = ({ scrollToFooter }) => {
           priority
           quality={90}
         />
-      </div>
+      </button>
 
       {/* Main Content */}
       <div className="relative z-10 flex flex-col items-center mt-[120px] sm:mb-[40px] px-4">
