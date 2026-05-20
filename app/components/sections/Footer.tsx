@@ -60,7 +60,7 @@ const Footer: React.FC = () => {
 
   return (
     <footer className="min-h-screen glass-effect py-8 px-6 md:py-16 md:px-32 text-white relative overflow-hidden">
-      {/* Background */}
+      {/* Background   */}
       <div
         className="absolute inset-0 bg-cover bg-center blur-3xl pointer-events-none opacity-30"
         style={{ backgroundImage: "url('/footer-bg.png')" }}
